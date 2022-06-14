@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -e
 set -u
-set 0- pipefail
+set -o pipefail
 
 log() {
     local fname=${BASH_SOURCE[1]##*/}
@@ -25,11 +25,11 @@ fi
 . ./cmd.sh || exit 1;
 . ./db.sh || exit 1;
 
-if [ -z "${CH}" ]; then
+if [ -z "${CHildren}" ]; then
    log "Fill the value of 'JSUT' of db.sh"
    exit 1
 fi
-db_root=${CH}
+db_root=${CHildren}
 
 train_set=train
 train_dev=valid
@@ -78,7 +78,7 @@ if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
     utils/subset_data_dir.sh --last data/train 120 data/deveval
     utils/subset_data_dir.sh --last data/deveval 95 data/${eval_set}
     utils/subset_data_dir.sh --first data/deveval 5 data/${train_dev}
-    n=$(( $(wc -l < data/train/wav.scp) - 120 ))
+    n=$(( $(wc -l < data/train/wav.scp) - 5 ))
     utils/subset_data_dir.sh --first data/train ${n} data/${train_set}
 fi
 
