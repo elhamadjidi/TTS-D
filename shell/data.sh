@@ -25,15 +25,15 @@ fi
 . ./cmd.sh || exit 1;
 . ./db.sh || exit 1;
 
-if [ -z "${CHildren}" ]; then
+if [ -z "${CHILDREN}" ]; then
    log "Fill the value of 'JSUT' of db.sh"
    exit 1
 fi
-db_root=${CHildren}
+db_root=${CHILDREN}
 
-train_set=train
-train_dev=valid
-eval_set=tests
+train_set=tr_no_dev
+train_dev=dev
+eval_set=eval1
 
 if [ ${stage} -le -1 ] && [ ${stop_stage} -ge -1 ]; then
     log "stage -1: Data Download"
